@@ -47,6 +47,7 @@ def run(filename):
         (commands, symbols) = p
         print commands 
         for c in commands: 
+            c = clean(c)
             if c[0] == 'push': 
                 stack.append( [x[:] for x in stack[-1]] )
             elif c[0] == 'pop': 
@@ -105,3 +106,12 @@ def run(filename):
     else:
         print "Parsing failed."
         return
+
+def clean(command): 
+    if (command[0] == "rotate" or command[0] == "save" or command == "display"):
+        return command
+    ans = [command[0]]
+    for i in range(1, len(command)):
+        if isinstance(command[i], float):
+            ans.append(command[i])
+    return tuple(ans)
